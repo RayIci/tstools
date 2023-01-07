@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name='toolbox',
-    version='0.0.1',
+    version='0.0.2',
     author='Alex Valle | Gabriele Berruti',
     author_email='alexvalle75@gmail.com',
     description='Useful package for analyze, manipulate and plot time series',
@@ -17,5 +17,5 @@ setuptools.setup(
 
     license='MIT',
     packages=['tstools'],
-    install_requires=['pandas', 'statsmodels', 'matplotlib'],
+    install_requires=['pandas', 'statsmodels', 'matplotlib', 'abc'],
 )
