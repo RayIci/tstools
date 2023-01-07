@@ -53,7 +53,7 @@ def plot_all(
 
 
 def plot_multiple(
-    series_list: list, 
+    series: list, 
     plot_width: int = 20,
     plot_height: int = 5,
     titles: list = [],
@@ -67,7 +67,7 @@ def plot_multiple(
 
     Parameters
     ----------
-    series_list: list of pandas.Series
+    series: list of pandas.Series
         the series to be plotted
     plot_width: int = 20
         the width of the plot
@@ -80,14 +80,14 @@ def plot_multiple(
     """
 
     # number of total plots
-    n_plots = len(series_list)
+    n_plots = len(series)
 
     # set the total figure size
     plt.figure(figsize=(plot_width, plot_height * n_plots))
 
     # iterate over the series list and plot each graph in the right position
     # given by the index
-    for idx, series in enumerate(series_list):
+    for idx, series in enumerate(series):
         
         plt.subplot(n_plots, 1, idx + 1)
         
@@ -148,12 +148,12 @@ def plot_acf_pacf(
 
 
 def plot_single(
-    series_list: list, 
+    series: list | pd.Series, 
     figsize: tuple = (20, 5), 
     subplot: tuple = None, 
     title: str = "", 
     show: bool = True,
-    labels_list: list = []
+    labels: list | str = []
     ):
 
     """
@@ -163,8 +163,8 @@ def plot_single(
 
     Parameters
     ----------
-    series_list: list
-        The list of pandas Series
+    series: list
+        The pandas Series or a list of pandas Series
     figsize: tuple = (20, 5)
         The figuresize of the plot
     subplot: tuple = None
@@ -173,23 +173,36 @@ def plot_single(
         The title of the plot
     show: bool = True
         True of False if you want to show the plot or not (you maybe want to defear the show of this plot)
-    labels_list: list = []
-        A list of labels for the series
+    labels: list = []
+        The label of the series the labels of the series as a list of strings
     """
 
+    # set the figure size of the plot
     plt.figure(figsize=figsize)
     
+
+    # check the subplot
     try:
         if subplot != None:
             plt.subplot(subplot[0], subplot[1], subplot[2])
     except Exception as e:
         raise Exception("please give 3 positional argument for the subplot\n(row, col, plot_pos)")
-        
-    for idx, series in enumerate(series_list):
-        plt.plot(series, label= labels_list[idx] if len(labels_list) > idx else "")
+
+    # make the series a list of series if is not
+    if not isinstance(series, list):
+        series = [series]
     
+    # make the labels a list of string if is not
+    if not isinstance(labels, list):
+        labels = [labels]
+
+    # makes the actual plot
+    for idx, series in enumerate(series):
+        plt.plot(series, label= labels[idx] if len(labels) > idx else "")
+    
+    # set the title
     plt.title(title)
-    if len(labels_list) > 0:
+    if len(labels) > 0:
         plt.legend()
 
     if show:
