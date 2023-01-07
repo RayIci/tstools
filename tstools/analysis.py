@@ -182,31 +182,16 @@ def __detect_anomalies_resid_ci(series: pd.Series, model: str = "additive", peri
 ########################################################################
 """
 
-class SmoothingChoice:
+def smooth_rollingMean(series: pd.Series, window: int):
     """
-    Description
-    -----------
-    Choose the type of smooth that you want to applay to the series
-    """
-
-    def __init__(self,
-        _series: pd.Series
-    ):
-        self.__series = _series
-    
-    @property
-    def series(self):
-        return self.__series
-
-
-    def rolling_mean(self, window: int):
-        """
         Description
         -----------
         Smooth the series by using a window and computing the mean
 
         Parameters
         ----------
+        series: pd.Series
+            The pandas series
         window: int
             The window used for performing the moothing
 
@@ -214,33 +199,8 @@ class SmoothingChoice:
         -------
         The SmoothingResult class
         """
-        return __smooth_rollingMean(self.__series, window=window)
-
-
-def smooth(series: pd.Series):
-    """
-    Description
-    -----------
-    Smooth the series by choosing the smoothing that you want
-
-    Parameters
-    ----------
-    series: pd.Series
-        The pandas series
-
-    Returns
-    -------
-    The SmoothingChoice class that guide you to choice the correct type of smooth
-    """
-    return SmoothingChoice(series)
-
-
-
-def __smooth_rollingMean(series: pd.Series, window: int):
     rm = series.rolling(window=window).mean()
     return SmoothingResult(series, rm, "smoothing rolling mean", {"window":window})
-
-
 
 
 
@@ -357,13 +317,13 @@ class SmoothingResult():
 
     def plot_compare(self, title=""):
         """
-        Describe
-        --------
+        Description
+        -----------
         Plot the original and the smoothed series all into one plot
         """
 
         if title == "":
-            title = "{} " + "| params: {}".format(self.__method, self.__params) if len(self.__params) > 0 else ""
+            title = "{} ".format(self.__method) + "| params: {}".format(self.__params) if len(self.__params) > 0 else ""
 
         plot.plot_single(
             [self.__original, self.__smoothed],
@@ -374,8 +334,8 @@ class SmoothingResult():
 
     def plot_original(self, title=""):
         """
-        Describe
-        --------
+        Description
+        -----------
         Plot the original series
         """
 
@@ -390,16 +350,16 @@ class SmoothingResult():
 
     def plot_smoothed(self):
         """
-        Describe
-        --------
+        Description
+        -----------
         Plot the smoothed series
         """
 
         if title == "":
-            title = "{} " + "| params: {}".format(self.__method, self.__params) if len(self.__params) > 0 else ""
+            title = "{} ".format(self.__method) + "| params: {}".format(self.__params) if len(self.__params) > 0 else ""
 
         plot.plot_single(
             [self.__smoothed],
-            title="{} " + "| params: {}".format(self.__method, self.__params) if len(self.__params) > 0 else ""
+            title=title
         )
 
