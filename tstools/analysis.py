@@ -327,7 +327,7 @@ class SmoothingResult():
 
         plot.plot_single(
             [self.__original, self.__smoothed],
-            labels_list=["original", "smoothed"],
+            labels=["original", "smoothed"],
             title=title
         )
 
