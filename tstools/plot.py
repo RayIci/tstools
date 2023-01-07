@@ -221,4 +221,4 @@ def plot_seasonalDecompose(
         s_dec.resid,
     ]
 
-    plotMultiple(series, titles=titles)
+    plot_multiple(series, titles=titles)
