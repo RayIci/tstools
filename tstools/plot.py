@@ -4,7 +4,7 @@ from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 from statsmodels.tsa.seasonal import seasonal_decompose
 
 
-def plot_All(
+def plot_all(
     dataframe: pd.DataFrame, 
     plot_width : int = 20, 
     plot_height: int = 5, 
@@ -52,7 +52,7 @@ def plot_All(
     plt.show()
 
 
-def plot_Multiple(
+def plot_multiple(
     series_list: list, 
     plot_width: int = 20,
     plot_height: int = 5,
@@ -147,7 +147,7 @@ def plot_acf_pacf(
     plt.show()
 
 
-def plot_Single(
+def plot_single(
     series_list: list, 
     figsize: tuple = (20, 5), 
     subplot: tuple = None, 

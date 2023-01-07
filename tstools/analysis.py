@@ -365,7 +365,7 @@ class SmoothingResult():
         if title == "":
             title = "{} " + "| params: {}".format(self.__method, self.__params) if len(self.__params) > 0 else ""
 
-        plot.plotSingle(
+        plot.plot_single(
             [self.__original, self.__smoothed],
             labels_list=["original", "smoothed"],
             title=title
@@ -382,7 +382,7 @@ class SmoothingResult():
         if title == "":
             title = "original series"
 
-        plot.plotSingle(
+        plot.plot_single(
             [self.__original],
             title="original series"
         )
@@ -398,7 +398,7 @@ class SmoothingResult():
         if title == "":
             title = "{} " + "| params: {}".format(self.__method, self.__params) if len(self.__params) > 0 else ""
 
-        plot.plotSingle(
+        plot.plot_single(
             [self.__smoothed],
             title="{} " + "| params: {}".format(self.__method, self.__params) if len(self.__params) > 0 else ""
         )
