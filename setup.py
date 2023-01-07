@@ -17,5 +17,5 @@ setuptools.setup(
 
     license='MIT',
     packages=['tstools'],
-    install_requires=['pandas', 'statsmodels', 'matplotlib', 'abc'],
+    install_requires=['pandas', 'statsmodels', 'matplotlib'],
 )

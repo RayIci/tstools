@@ -1,5 +1,3 @@
-from abc import ABC, abstractmethod
-
 import statsmodels.tsa.stattools as sts
 from statsmodels.tsa.seasonal import seasonal_decompose
 import matplotlib.pyplot as plt 
