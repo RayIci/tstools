@@ -185,26 +185,97 @@ def __detect_anomalies_resid_ci(series: pd.Series, model: str = "additive", peri
 
 def smooth_rollingMean(series: pd.Series, window: int):
     """
-        Description
-        -----------
-        Smooth the series by using a window and computing the mean
+    Description
+    -----------
+    Smooth the series by using a window and computing the mean
 
-        Parameters
-        ----------
-        series: pd.Series
-            The pandas series
-        window: int
-            The window used for performing the moothing
+    Parameters
+    ----------
+    series: pd.Series
+        The pandas series
+    window: int
+        The window used for performing the moothing
 
-        Returns
-        -------
-        The SmoothingResult class
-        """
+    Returns
+    -------
+    The SmoothingResult class
+    """
     rm = series.rolling(window=window).mean()
     return SmoothingResult(series, rm, "smoothing rolling mean", {"window":window})
 
 
+# TODO: Test
+def smooth_exponential(series: pd.Series, alpha: float):
+    """
+    Description
+    -----------
+    Smooth the series by using exponetial smoothing technique
 
+    Parameters
+    ----------
+    series: pd.Series
+        The pandas series
+    alpha: float
+        float between [0.0, 1.0], smoothing parameter
+
+    Returns
+    -------
+    The SmoothingResult class
+    """
+
+    if alpha < 0 or alpha > 1:
+        raise Exception("The alpha value bust be a number between 0 and 1 (current value: {})".format(alpha))
+
+    result = [series[0]]
+    for n in range(1, len(series)):
+        result.append(alpha * series[n] + (1 - alpha) * result[n - 1])
+    
+    return SmoothingResult(series, result, "exponential smoothing", {'aplha':alpha})
+
+
+# TODO: Test
+def smooth_doubleExponential(series: pd.Series, alpha: float, beta: float):
+    """
+    Description
+    -----------
+    Smooth the series by using double exponetial smoothing technique
+
+    Parameters
+    ----------
+    series: pd.Series
+        The pandas series
+    alpha: float
+        float between [0.0, 1.0], smoothing parameter for level
+    beta: float
+        float between [0.0, 1.0], smoothing parameter for trend
+
+    Returns
+    -------
+    The SmoothingResult class
+    """
+
+    if alpha < 0 or alpha > 1:
+        raise Exception("The alpha value bust be a number between 0 and 1 (current value: {})".format(alpha))
+
+    if beta < 0 or beta > 1:
+        raise Exception("The beta value bust be a number between 0 and 1 (current value: {})".format(beta))
+    
+    result = [series[0]]
+    for n in range(1, len(series) + 1):
+        if n == 1:
+            level, trend = series[0], series[1] - series[0]
+
+        if n >= len(series):  # forecasting
+            value = result[-1]
+
+        else:
+            value = series[n]
+
+        last_level, level = level, alpha * value + (1 - alpha) * (level + trend)
+        trend = beta * (level - last_level) + (1 - beta) * trend
+        result.append(level + trend)
+
+    return SmoothingResult(series, result, "double exponential smoothing", {'aplha':alpha, 'beta':beta})
 
 
 """
