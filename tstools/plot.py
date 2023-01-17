@@ -108,7 +108,8 @@ def plot_acf_pacf(
     series: pd.Series, 
     horizontal: bool = True, 
     figsize: tuple = None, 
-    pacf_method: str = "ywm"
+    pacf_method: str = "ywm",
+    lags=None
     ):
 
     """
@@ -142,8 +143,8 @@ def plot_acf_pacf(
 
     f, ax = plt.subplots(nrows=nrow, ncols=ncol, figsize=figsize)
 
-    plot_acf(series, ax=ax[0])
-    plot_pacf(series, ax=ax[1], method=pacf_method)
+    plot_acf(series, ax=ax[0], lags=lags)
+    plot_pacf(series, ax=ax[1], method=pacf_method, lags=lags)
     plt.show()
 
 
