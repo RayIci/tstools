@@ -45,7 +45,7 @@ def difference(series: pd.Series, diff_lag: int = 1):
 
 
 
-def count_null(dataset: pd.DataFrame, disp:bool = True):
+def count_null(dataset: pd.DataFrame):
     """
     Description
     -----------
@@ -72,7 +72,4 @@ def count_null(dataset: pd.DataFrame, disp:bool = True):
     for idx in range(null_values.shape[0]):
         nullValues_df.insert(idx, null_values.index[idx], [null_values[idx]])
     
-    if disp: 
-        pd.display(nullValues_df)
-
-    return null_values
+    return nullValues_df
