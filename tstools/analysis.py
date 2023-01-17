@@ -230,7 +230,9 @@ def smooth_exponential(series: pd.Series, alpha: float):
     for n in range(1, len(series)):
         result.append(alpha * series[n] + (1 - alpha) * result[n - 1])
     
-    return SmoothingResult(series, result, "exponential smoothing", {'aplha':alpha})
+    return_series = pd.Series(data=result, index=series.index)
+
+    return SmoothingResult(series, return_series, "exponential smoothing", {'aplha':alpha})
 
 
 # TODO: Test
@@ -261,7 +263,7 @@ def smooth_doubleExponential(series: pd.Series, alpha: float, beta: float):
         raise Exception("The beta value bust be a number between 0 and 1 (current value: {})".format(beta))
     
     result = [series[0]]
-    for n in range(1, len(series) + 1):
+    for n in range(1, len(series)):
         if n == 1:
             level, trend = series[0], series[1] - series[0]
 
@@ -275,7 +277,9 @@ def smooth_doubleExponential(series: pd.Series, alpha: float, beta: float):
         trend = beta * (level - last_level) + (1 - beta) * trend
         result.append(level + trend)
 
-    return SmoothingResult(series, result, "double exponential smoothing", {'aplha':alpha, 'beta':beta})
+    return_series = pd.Series(data=result, index=series.index)
+
+    return SmoothingResult(series, return_series, "double exponential smoothing", {'aplha':alpha, 'beta':beta})
 
 
 """
@@ -353,7 +357,6 @@ class AnomalyResult:
 
     def summary(self):
         print("[--] Number of anomalies detected: {}".format(self.n_anomalies))
-
 
 class SmoothingResult():
     """

@@ -42,3 +42,37 @@ def difference(series: pd.Series, diff_lag: int = 1):
 
     """
     return series.diff(diff_lag)[diff_lag:]
+
+
+
+def count_null(dataset: pd.DataFrame, disp:bool = True):
+    """
+    Description
+    -----------
+    Display and return, for each column, the number of null values as a pandas DataFrame
+
+    Parameters
+    ----------
+    dataset: pd.DataFrame
+        The dataset as padas DataFrame
+    disp:bool = True
+        True or False if you want to display the numbers of null values
+
+    Return
+    ------
+    The pandas Series conteining the numbers of null values for each column of the original dataset
+    """
+
+    # sum the numbers of null values for each column of the pandas dataframe
+    null_values = dataset.isna().sum()
+
+    # iterate over the null values (padnas Series) and insert 
+    # them as a column in a new pandas DataFrame
+    nullValues_df = pd.DataFrame()
+    for idx in range(null_values.shape[0]):
+        nullValues_df.insert(idx, null_values.index[idx], [null_values[idx]])
+    
+    if disp: 
+        pd.display(nullValues_df)
+
+    return null_values
