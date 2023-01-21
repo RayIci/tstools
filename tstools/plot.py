@@ -236,3 +236,14 @@ def plot_seasonalDecompose(
     ]
 
     plot_multiple(series, titles=titles)
+    
+    
+
+def plot_seasonalDecompose(series, period: int):
+
+    sd = seasonal_decompose(series, period=period)
+
+    plot_single(sd.seasonal, title='seasonal')
+    plot_single([sd.observed, sd.trend], title='trend and original', labels=['original', 'trend'])
+    plot_single([sd.observed, sd.trend + sd.seasonal], title='trend + seasonal and observed', labels=['original', 'trend+seasonal'])
+    plot_single(sd.resid, title='resid')
