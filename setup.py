@@ -17,5 +17,5 @@ setuptools.setup(
 
     license='MIT',
     packages=['tstools'],
-    install_requires=['pandas', 'statsmodels', 'matplotlib', 'numpy','math','scipy.fftpack'],
+    install_requires=['pandas', 'statsmodels', 'matplotlib', 'numpy'],
 )
