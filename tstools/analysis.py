@@ -423,7 +423,7 @@ class SmoothingResult():
         )
 
 
-    def plot_smoothed(self, title=""):
+    def plot_smoothed(self):
         """
         Description
         -----------
